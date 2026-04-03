@@ -221,6 +221,190 @@ export const tripDays: TripDay[] = [
         tips: "Full hookups at most sites. Boat launch to Magic Kingdom. Stock up groceries at Publix in Celebration before arriving \u2014 Disney prices are steep."
       }
     ]
+  },
+  {
+    day: 3,
+    date: "Thursday, April 10",
+    label: "Return Day 1",
+    from: "Fort Wilderness, Disney World",
+    to: "Murfreesboro, TN",
+    totalMiles: 640,
+    driveTime: "~9.5 hours",
+    stops: [
+      {
+        id: "d3-start",
+        name: "Fort Wilderness, Disney World",
+        type: "start",
+        lat: 28.4089,
+        lng: -81.5639,
+        mile: 0,
+        eta: "Early Morning",
+        description: "Head out! Take FL Turnpike North or I-4 West to I-75 North.",
+        tips: "Top off fuel and dump tanks before leaving. Turnpike North to I-75 is the easier exit from Orlando."
+      },
+      {
+        id: "d3-wildwood",
+        name: "Wildwood, FL \u2014 TOLL DECISION",
+        type: "toll-decision",
+        lat: 28.7653,
+        lng: -82.0261,
+        mile: 85,
+        eta: "~1.5 hours",
+        description: "If you took the Turnpike: merge onto I-75 North here. If you took I-4: you're already on I-75.",
+        tips: "Same toll situation as the way down. Turnpike is easier to navigate out of Orlando."
+      },
+      {
+        id: "d3-lakecity",
+        name: "Lake City, FL",
+        type: "fuel",
+        lat: 30.1897,
+        lng: -82.6393,
+        mile: 195,
+        eta: "~3 hours",
+        description: "Major fuel cluster on I-75. Pilot/Flying J and others.",
+        address: "I-75, Lake City, FL",
+        tips: "Good first fuel stop heading north."
+      },
+      {
+        id: "d3-valdosta",
+        name: "Valdosta, GA",
+        type: "fuel",
+        lat: 30.8327,
+        lng: -83.2785,
+        mile: 245,
+        eta: "~4 hours",
+        description: "First Georgia stop. Love's and multiple truck stops.",
+        address: "I-75, Valdosta, GA",
+        tips: "Fuel is cheaper in Georgia than Florida. Good lunch stop."
+      },
+      {
+        id: "d3-cordele",
+        name: "Cordele / Tifton, GA",
+        type: "fuel",
+        lat: 31.9686,
+        lng: -83.7788,
+        mile: 310,
+        eta: "~5 hours",
+        description: "Love's and Pilot/Flying J on I-75.",
+        address: "I-75, Cordele/Tifton, GA",
+        tips: "Top off if below half tank \u2014 long stretch to Atlanta area."
+      },
+      {
+        id: "d3-atlanta",
+        name: "Atlanta bypass (I-285)",
+        type: "rest",
+        lat: 33.7490,
+        lng: -84.3880,
+        mile: 460,
+        eta: "~7 hours",
+        description: "Take I-75 North through Atlanta or I-285 West bypass. Heading north, you MUST pass through the Atlanta area.",
+        tips: "Try to hit Atlanta between 10 AM\u20132 PM or after 7 PM to avoid the worst traffic. I-285 West bypass can help avoid downtown."
+      },
+      {
+        id: "d3-chattanooga",
+        name: "Chattanooga, TN",
+        type: "fuel",
+        lat: 35.0456,
+        lng: -85.3097,
+        mile: 540,
+        eta: "~8.5 hours",
+        description: "I-75 to I-24 West junction. Love's and Pilot/Flying J nearby.",
+        address: "I-75 & I-24 junction, Chattanooga, TN",
+        tips: "Merge onto I-24 West toward Nashville. Monteagle Mountain is ahead \u2014 this time you're climbing, which is easier than descending."
+      },
+      {
+        id: "d3-murfreesboro",
+        name: "Best Western, Murfreesboro, TN",
+        type: "overnight",
+        lat: 35.8456,
+        lng: -86.3903,
+        mile: 640,
+        eta: "~9.5 hours",
+        description: "Overnight stop. Best Western right off I-24. Just 30 min southeast of Nashville.",
+        address: "Murfreesboro, TN (I-24)",
+        tips: "Call ahead about RV parking. Murfreesboro has plenty of restaurants and a Walmart nearby."
+      }
+    ]
+  },
+  {
+    day: 4,
+    date: "Friday, April 11",
+    label: "Return Day 2",
+    from: "Murfreesboro, TN",
+    to: "Winfield, MO",
+    totalMiles: 425,
+    driveTime: "~7 hours",
+    stops: [
+      {
+        id: "d4-start",
+        name: "Murfreesboro, TN",
+        type: "start",
+        lat: 35.8456,
+        lng: -86.3903,
+        mile: 0,
+        eta: "Morning",
+        description: "Head west on I-24 toward Paducah, then I-57 North to I-64 West.",
+        tips: "Short day \u2014 only ~7 hours to home. No rush."
+      },
+      {
+        id: "d4-paducah",
+        name: "Paducah, KY",
+        type: "fuel",
+        lat: 37.0834,
+        lng: -88.6001,
+        mile: 175,
+        eta: "~2.5 hours",
+        description: "Love's and Pilot/Flying J in the Paducah area. I-24 to I-57 North transition.",
+        address: "I-24, Paducah, KY",
+        tips: "Good breakfast/fuel stop. Merge onto I-57 North here."
+      },
+      {
+        id: "d4-marion",
+        name: "Marion, IL",
+        type: "fuel",
+        lat: 37.7306,
+        lng: -88.9331,
+        mile: 225,
+        eta: "~3.5 hours",
+        description: "I-57/I-24 junction area. Multiple truck stops.",
+        address: "I-57 & I-24 junction, Marion, IL",
+        tips: "Good lunch stop. Transition from I-57 to I-64 West at Mt. Vernon."
+      },
+      {
+        id: "d4-mtvernon",
+        name: "Mt. Vernon, IL",
+        type: "fuel",
+        lat: 38.3172,
+        lng: -88.9031,
+        mile: 295,
+        eta: "~5 hours",
+        description: "I-64/I-57 interchange. Love's, Pilot/Flying J, and TA.",
+        address: "I-64 & I-57 junction, Mt. Vernon, IL",
+        tips: "Merge onto I-64 West. Last major fuel stop before St. Louis. Fill up here."
+      },
+      {
+        id: "d4-stl",
+        name: "St. Louis, MO (I-64 through)",
+        type: "rest",
+        lat: 38.6270,
+        lng: -90.1994,
+        mile: 380,
+        eta: "~6 hours",
+        description: "Pass through St. Louis on I-64 West. Almost home!",
+        tips: "Friday afternoon traffic may be heavier through STL. Stay patient."
+      },
+      {
+        id: "d4-home",
+        name: "Winfield, MO",
+        type: "destination",
+        lat: 38.9342,
+        lng: -90.7382,
+        mile: 425,
+        eta: "~7 hours",
+        description: "Home sweet home! Trip complete.",
+        tips: "Welcome back! Don't forget to dump tanks if you didn't already."
+      }
+    ]
   }
 ]
 

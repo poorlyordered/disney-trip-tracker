@@ -50,7 +50,7 @@ export default function Home() {
           Winfield, MO → Fort Wilderness
         </p>
         <p className="text-xs text-gray-400">
-          April 4-5, 2026 &middot; RV + 1 Car &middot; ~1,065 miles
+          April 4-11, 2026 &middot; RV + 1 Car &middot; ~2,130 miles round trip
         </p>
       </header>
 
@@ -141,7 +141,8 @@ export default function Home() {
         <h3 className="font-semibold text-amber-900 mb-3">RV Alerts</h3>
         <ul className="space-y-2 text-sm text-amber-800">
           <li><strong>Monteagle Mountain (I-24, mile ~480):</strong> 6% grade, 4-mile descent. GEAR DOWN. Do not ride brakes.</li>
-          <li><strong>Atlanta bypass:</strong> You skip it by staying at McDonough — already south of it on Day 2.</li>
+          <li><strong>Atlanta bypass (outbound):</strong> You skip it by staying at McDonough — already south of it on Day 2.</li>
+          <li><strong>Atlanta (return):</strong> You MUST pass through on Day 3. Aim for 10 AM-2 PM or after 7 PM. Use I-285 West bypass to avoid downtown.</li>
           <li><strong>South GA on I-75:</strong> Long stretches between exits. Don&apos;t let the tank get low.</li>
           <li><strong>I-4 Orlando:</strong> Take the Turnpike instead. Way easier in an RV.</li>
           <li><strong>Best Western parking:</strong> Call ahead to confirm they can fit the RV overnight.</li>
