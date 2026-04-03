@@ -12,35 +12,34 @@ interface DaySectionProps {
 export default function DaySection({ day, checkedStops, onToggleStop }: DaySectionProps) {
   const completedCount = day.stops.filter((s) => checkedStops[s.id]).length;
   const progress = Math.round((completedCount / day.stops.length) * 100);
+  const isDriveDay = day.totalMiles > 0;
 
   return (
-    <section className="mb-8">
-      <div className="sticky top-0 z-10 bg-gray-50/95 backdrop-blur-sm pb-3 pt-2">
+    <section className="mb-6">
+      <div className="sticky top-0 z-10 bg-gray-50/95 backdrop-blur-sm pb-2 pt-1">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">
-              {day.label}: {day.date}
-            </h2>
-            <p className="text-sm text-gray-500">
-              {day.from} → {day.to} &middot; {day.totalMiles} mi &middot; {day.driveTime}
+            <h2 className="text-lg font-bold text-gray-900">{day.date}</h2>
+            <p className="text-xs text-gray-500">
+              {isDriveDay
+                ? `${day.from} → ${day.to} · ${day.totalMiles} mi · ${day.driveTime}`
+                : `${day.from} · ${day.driveTime}`}
             </p>
           </div>
-          <div className="text-right">
-            <span className="text-sm font-medium text-gray-600">
-              {completedCount}/{day.stops.length}
-            </span>
-          </div>
+          <span className="text-xs font-medium text-gray-400">
+            {completedCount}/{day.stops.length}
+          </span>
         </div>
 
-        <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
+        <div className="mt-1.5 w-full bg-gray-200 rounded-full h-1.5">
           <div
-            className="bg-green-500 h-2 rounded-full transition-all duration-500"
+            className="bg-green-500 h-1.5 rounded-full transition-all duration-500"
             style={{ width: `${progress}%` }}
           />
         </div>
       </div>
 
-      <div className="mt-4 space-y-3">
+      <div className="mt-3 space-y-2">
         {day.stops.map((stop) => (
           <StopCard
             key={stop.id}

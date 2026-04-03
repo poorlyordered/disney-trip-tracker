@@ -1,7 +1,7 @@
 export interface Stop {
   id: string
   name: string
-  type: "start" | "fuel" | "food" | "rest" | "overnight" | "toll-decision" | "destination"
+  type: "start" | "fuel" | "food" | "rest" | "overnight" | "toll-decision" | "destination" | "park" | "dining" | "attraction"
   lat: number
   lng: number
   mile: number
@@ -224,6 +224,309 @@ export const tripDays: TripDay[] = [
   },
   {
     day: 3,
+    date: "Sunday, April 6",
+    label: "Disney Day 1",
+    from: "Fort Wilderness",
+    to: "Fort Wilderness",
+    totalMiles: 0,
+    driveTime: "Park day",
+    stops: [
+      {
+        id: "d3-morning",
+        name: "Magic Kingdom - Rope Drop",
+        type: "park",
+        lat: 28.4177,
+        lng: -81.5812,
+        mile: 0,
+        eta: "8-9 AM",
+        description: "Take the boat from Fort Wilderness to Magic Kingdom. Arrive early for rope drop \u2014 shortest lines of the day.",
+        address: "Magic Kingdom, Walt Disney World, Orlando, FL",
+        tips: "The Fort Wilderness boat dock is a 5-10 min walk from most campsites. Boat ride is ~10 min. Much better than the bus."
+      },
+      {
+        id: "d3-mk-fantasyland",
+        name: "Fantasyland & Tomorrowland",
+        type: "attraction",
+        lat: 28.4197,
+        lng: -81.5793,
+        mile: 0,
+        eta: "Morning",
+        description: "Hit the big rides while lines are short: Seven Dwarfs Mine Train, Space Mountain, Big Thunder Mountain Railroad, Pirates of the Caribbean.",
+        tips: "Seven Dwarfs Mine Train has the longest wait \u2014 do it first at rope drop or use Lightning Lane."
+      },
+      {
+        id: "d3-mk-lunch",
+        name: "Lunch break",
+        type: "food",
+        lat: 28.4177,
+        lng: -81.5812,
+        mile: 0,
+        eta: "~12 PM",
+        description: "Pecos Bill Tall Tale Inn (Frontierland) or Columbia Harbour House (Liberty Square) are solid quick-service options.",
+        tips: "Or boat back to Fort Wilderness for lunch at Trail's End Restaurant \u2014 buffet, good value, and a break from the crowds."
+      },
+      {
+        id: "d3-mk-afternoon",
+        name: "Adventureland & Liberty Square",
+        type: "attraction",
+        lat: 28.4185,
+        lng: -81.5835,
+        mile: 0,
+        eta: "Afternoon",
+        description: "Jungle Cruise, Haunted Mansion, Buzz Lightyear's Space Ranger Spin. Catch any rides you missed in the morning.",
+        tips: "Lines get longer midday. Consider a break back at camp during the hottest part of the afternoon (2-4 PM) and return for evening."
+      },
+      {
+        id: "d3-coral-reef",
+        name: "Coral Reef Restaurant \u2014 RESERVATION",
+        type: "dining",
+        lat: 28.3747,
+        lng: -81.5494,
+        mile: 0,
+        eta: "4:20 PM",
+        description: "Dinner reservation at Coral Reef Restaurant in EPCOT. Seafood dining next to the aquarium in The Seas pavilion.",
+        address: "Coral Reef Restaurant, EPCOT, Walt Disney World",
+        tips: "This is in EPCOT, not Magic Kingdom. You'll need to travel from MK to EPCOT \u2014 take the monorail (MK \u2192 TTC \u2192 EPCOT) or bus. Allow 30-45 min travel time. Arrive by 3:30-3:45 PM."
+      },
+      {
+        id: "d3-epcot-evening",
+        name: "EPCOT World Showcase",
+        type: "attraction",
+        lat: 28.3689,
+        lng: -81.5517,
+        mile: 0,
+        eta: "Evening",
+        description: "After dinner, explore World Showcase. Walk around the countries, grab drinks and snacks. Don't miss Frozen Ever After (Norway) or Remy's Ratatouille Adventure (France).",
+        tips: "World Showcase is best in the evening \u2014 cooler temps, great atmosphere, and the countries light up beautifully."
+      }
+    ]
+  },
+  {
+    day: 4,
+    date: "Monday, April 7",
+    label: "Disney Day 2",
+    from: "Fort Wilderness",
+    to: "Fort Wilderness",
+    totalMiles: 0,
+    driveTime: "Park day",
+    stops: [
+      {
+        id: "d4-morning",
+        name: "Hollywood Studios - Rope Drop",
+        type: "park",
+        lat: 28.3575,
+        lng: -81.5583,
+        mile: 0,
+        eta: "8-9 AM",
+        description: "Bus from Fort Wilderness to Hollywood Studios. Get there early for the best Star Wars and Toy Story rides.",
+        address: "Hollywood Studios, Walt Disney World, Orlando, FL",
+        tips: "This park fills up fast. Rope drop is critical for short waits."
+      },
+      {
+        id: "d4-hs-starwars",
+        name: "Star Wars: Galaxy's Edge",
+        type: "attraction",
+        lat: 28.3536,
+        lng: -81.5607,
+        mile: 0,
+        eta: "Morning",
+        description: "Rise of the Resistance (must-do, use Lightning Lane if available), Millennium Falcon: Smugglers Run. The whole area is incredibly immersive.",
+        tips: "Rise of the Resistance is the best ride at Disney World. Period. Do this first at rope drop."
+      },
+      {
+        id: "d4-hs-toystory",
+        name: "Toy Story Land & Tower of Terror",
+        type: "attraction",
+        lat: 28.3553,
+        lng: -81.5595,
+        mile: 0,
+        eta: "Late Morning",
+        description: "Slinky Dog Dash, Toy Story Mania, and Tower of Terror. Rock 'n' Roller Coaster if you like thrill rides.",
+        tips: "Tower of Terror is a classic \u2014 don't skip it."
+      },
+      {
+        id: "d4-hs-lunch",
+        name: "Lunch",
+        type: "food",
+        lat: 28.3575,
+        lng: -81.5583,
+        mile: 0,
+        eta: "~12 PM",
+        description: "Docking Bay 7 in Galaxy's Edge (Star Wars themed, surprisingly good food) or Woody's Lunch Box in Toy Story Land.",
+        tips: "Docking Bay 7 has some of the best quick-service food on Disney property."
+      },
+      {
+        id: "d4-pool",
+        name: "Fort Wilderness Pool & Relaxation",
+        type: "rest",
+        lat: 28.4089,
+        lng: -81.5639,
+        mile: 0,
+        eta: "Afternoon",
+        description: "Head back to camp for pool time, Tri-Circle-D Ranch (horses), archery, bike rentals, or just relax at the campsite.",
+        tips: "Fort Wilderness has tons of activities \u2014 don't feel like you need to be in a park every minute. The pool is great."
+      },
+      {
+        id: "d4-campfire",
+        name: "Chip 'n' Dale Campfire Singalong",
+        type: "attraction",
+        lat: 28.4075,
+        lng: -81.5635,
+        mile: 0,
+        eta: "~8 PM",
+        description: "Free nightly event at Fort Wilderness. Roast marshmallows, singalong with Chip and Dale, followed by an outdoor Disney movie.",
+        tips: "Bring your own marshmallows or buy the s'mores kit at the trading post. Great for winding down."
+      }
+    ]
+  },
+  {
+    day: 5,
+    date: "Tuesday, April 8",
+    label: "Disney Day 3",
+    from: "Fort Wilderness",
+    to: "Fort Wilderness",
+    totalMiles: 0,
+    driveTime: "Park day",
+    stops: [
+      {
+        id: "d5-morning",
+        name: "Animal Kingdom - Rope Drop",
+        type: "park",
+        lat: 28.3553,
+        lng: -81.5901,
+        mile: 0,
+        eta: "8-9 AM",
+        description: "Bus from Fort Wilderness to Animal Kingdom. Best experienced early \u2014 animals are most active in the morning.",
+        address: "Animal Kingdom, Walt Disney World, Orlando, FL",
+        tips: "This park is doable in half a day. Plan to be out by early afternoon."
+      },
+      {
+        id: "d5-ak-pandora",
+        name: "Pandora \u2014 The World of Avatar",
+        type: "attraction",
+        lat: 28.3558,
+        lng: -81.5924,
+        mile: 0,
+        eta: "Morning",
+        description: "Flight of Passage (incredible ride, the best simulator at Disney) and Na'vi River Journey. The whole land is stunning.",
+        tips: "Flight of Passage at rope drop \u2014 wait times hit 2+ hours later in the day."
+      },
+      {
+        id: "d5-ak-safari",
+        name: "Kilimanjaro Safaris & Expedition Everest",
+        type: "attraction",
+        lat: 28.3592,
+        lng: -81.5921,
+        mile: 0,
+        eta: "Late Morning",
+        description: "Safari ride through a real savanna with live animals. Expedition Everest is a great roller coaster. Dinosaur ride is fun too.",
+        tips: "Safari is best in the morning when animals are active and it's cooler."
+      },
+      {
+        id: "d5-ak-lunch",
+        name: "Lunch at Flame Tree Barbecue",
+        type: "food",
+        lat: 28.3570,
+        lng: -81.5895,
+        mile: 0,
+        eta: "~12 PM",
+        description: "Best quick-service BBQ on Disney property. Great waterfront seating area.",
+        tips: "The seating area behind the counter is gorgeous and usually less crowded."
+      },
+      {
+        id: "d5-free",
+        name: "Free afternoon",
+        type: "rest",
+        lat: 28.4089,
+        lng: -81.5639,
+        mile: 0,
+        eta: "Afternoon",
+        description: "Head back to Fort Wilderness. Pool, nap, explore the campground, rent a golf cart, or take the boat to the Magic Kingdom area resorts.",
+        tips: "Rent a golf cart from the Fort Wilderness marina \u2014 it's the best way to explore the campground and a blast to drive around."
+      },
+      {
+        id: "d5-ogas",
+        name: "Oga's Cantina \u2014 RESERVATION",
+        type: "dining",
+        lat: 28.3536,
+        lng: -81.5607,
+        mile: 0,
+        eta: "4:45 PM",
+        description: "Reservation at Oga's Cantina in Star Wars: Galaxy's Edge at Hollywood Studios. Themed cocktails and atmosphere in a Star Wars bar.",
+        address: "Oga's Cantina, Hollywood Studios, Walt Disney World",
+        tips: "This is at Hollywood Studios. Bus from Fort Wilderness takes ~20 min. Arrive by 4:15-4:20. It's a 45-min experience \u2014 drinks and small bites, not a full meal. Try the Fuzzy Tauntaun."
+      },
+      {
+        id: "d5-hs-evening",
+        name: "Hollywood Studios evening",
+        type: "attraction",
+        lat: 28.3575,
+        lng: -81.5583,
+        mile: 0,
+        eta: "Evening",
+        description: "After Oga's, catch any Hollywood Studios rides you missed on Day 2. Galaxy's Edge at night is magical with all the lighting.",
+        tips: "Check the app for Fantasmic! showtimes \u2014 the nighttime spectacular is worth seeing if it's running."
+      }
+    ]
+  },
+  {
+    day: 6,
+    date: "Wednesday, April 9",
+    label: "Disney Day 4",
+    from: "Fort Wilderness",
+    to: "Fort Wilderness",
+    totalMiles: 0,
+    driveTime: "Last full day",
+    stops: [
+      {
+        id: "d6-morning",
+        name: "EPCOT or Magic Kingdom revisit",
+        type: "park",
+        lat: 28.3747,
+        lng: -81.5494,
+        mile: 0,
+        eta: "Morning",
+        description: "Last full park day. Revisit your favorite park or hit anything you missed. EPCOT's World Showcase is great for a relaxed day.",
+        tips: "If you want more rides, go to Magic Kingdom. If you want a chill day with food and drinks, go to EPCOT."
+      },
+      {
+        id: "d6-epcot-food",
+        name: "EPCOT World Showcase food crawl",
+        type: "food",
+        lat: 28.3689,
+        lng: -81.5517,
+        mile: 0,
+        eta: "Lunch",
+        description: "Eat your way around the world. Highlights: fish & chips (UK), school bread (Norway), tacos (Mexico), pastries (France), bratwurst (Germany).",
+        tips: "Share plates and try lots of things rather than one big meal. The bakery in France (Les Halles Boulangerie-Patisserie) is excellent."
+      },
+      {
+        id: "d6-disney-springs",
+        name: "Disney Springs",
+        type: "attraction",
+        lat: 28.3712,
+        lng: -81.5191,
+        mile: 0,
+        eta: "Afternoon",
+        description: "Shopping and dining district. No park ticket needed. Great for souvenirs, unique shops, and restaurants.",
+        address: "Disney Springs, Walt Disney World, Orlando, FL",
+        tips: "World of Disney store for souvenirs. Gideon's Bakehouse for cookies (expect a line). The LEGO store is fun for kids."
+      },
+      {
+        id: "d6-packup",
+        name: "Pack up & prep for departure",
+        type: "rest",
+        lat: 28.4089,
+        lng: -81.5639,
+        mile: 0,
+        eta: "Evening",
+        description: "Head back to Fort Wilderness. Start packing up the RV, dump tanks, organize for tomorrow's early departure.",
+        tips: "Dump station at Fort Wilderness before you leave. Fuel up at the gas station near Disney Springs or on your way to the Turnpike."
+      }
+    ]
+  },
+  {
+    day: 7,
     date: "Thursday, April 10",
     label: "Return Day 1",
     from: "Fort Wilderness, Disney World",
@@ -232,7 +535,7 @@ export const tripDays: TripDay[] = [
     driveTime: "~9.5 hours",
     stops: [
       {
-        id: "d3-start",
+        id: "d7-start",
         name: "Fort Wilderness, Disney World",
         type: "start",
         lat: 28.4089,
@@ -243,7 +546,7 @@ export const tripDays: TripDay[] = [
         tips: "Top off fuel and dump tanks before leaving. Turnpike North to I-75 is the easier exit from Orlando."
       },
       {
-        id: "d3-wildwood",
+        id: "d7-wildwood",
         name: "Wildwood, FL \u2014 TOLL DECISION",
         type: "toll-decision",
         lat: 28.7653,
@@ -254,7 +557,7 @@ export const tripDays: TripDay[] = [
         tips: "Same toll situation as the way down. Turnpike is easier to navigate out of Orlando."
       },
       {
-        id: "d3-lakecity",
+        id: "d7-lakecity",
         name: "Lake City, FL",
         type: "fuel",
         lat: 30.1897,
@@ -266,7 +569,7 @@ export const tripDays: TripDay[] = [
         tips: "Good first fuel stop heading north."
       },
       {
-        id: "d3-valdosta",
+        id: "d7-valdosta",
         name: "Valdosta, GA",
         type: "fuel",
         lat: 30.8327,
@@ -278,7 +581,7 @@ export const tripDays: TripDay[] = [
         tips: "Fuel is cheaper in Georgia than Florida. Good lunch stop."
       },
       {
-        id: "d3-cordele",
+        id: "d7-cordele",
         name: "Cordele / Tifton, GA",
         type: "fuel",
         lat: 31.9686,
@@ -290,7 +593,7 @@ export const tripDays: TripDay[] = [
         tips: "Top off if below half tank \u2014 long stretch to Atlanta area."
       },
       {
-        id: "d3-atlanta",
+        id: "d7-atlanta",
         name: "Atlanta bypass (I-285)",
         type: "rest",
         lat: 33.7490,
@@ -301,7 +604,7 @@ export const tripDays: TripDay[] = [
         tips: "Try to hit Atlanta between 10 AM\u20132 PM or after 7 PM to avoid the worst traffic. I-285 West bypass can help avoid downtown."
       },
       {
-        id: "d3-chattanooga",
+        id: "d7-chattanooga",
         name: "Chattanooga, TN",
         type: "fuel",
         lat: 35.0456,
@@ -313,7 +616,7 @@ export const tripDays: TripDay[] = [
         tips: "Merge onto I-24 West toward Nashville. Monteagle Mountain is ahead \u2014 this time you're climbing, which is easier than descending."
       },
       {
-        id: "d3-murfreesboro",
+        id: "d7-murfreesboro",
         name: "Best Western, Murfreesboro, TN",
         type: "overnight",
         lat: 35.8456,
@@ -327,7 +630,7 @@ export const tripDays: TripDay[] = [
     ]
   },
   {
-    day: 4,
+    day: 8,
     date: "Friday, April 11",
     label: "Return Day 2",
     from: "Murfreesboro, TN",
@@ -336,7 +639,7 @@ export const tripDays: TripDay[] = [
     driveTime: "~7 hours",
     stops: [
       {
-        id: "d4-start",
+        id: "d8-start",
         name: "Murfreesboro, TN",
         type: "start",
         lat: 35.8456,
@@ -347,7 +650,7 @@ export const tripDays: TripDay[] = [
         tips: "Short day \u2014 only ~7 hours to home. No rush."
       },
       {
-        id: "d4-paducah",
+        id: "d8-paducah",
         name: "Paducah, KY",
         type: "fuel",
         lat: 37.0834,
@@ -359,7 +662,7 @@ export const tripDays: TripDay[] = [
         tips: "Good breakfast/fuel stop. Merge onto I-57 North here."
       },
       {
-        id: "d4-marion",
+        id: "d8-marion",
         name: "Marion, IL",
         type: "fuel",
         lat: 37.7306,
@@ -371,7 +674,7 @@ export const tripDays: TripDay[] = [
         tips: "Good lunch stop. Transition from I-57 to I-64 West at Mt. Vernon."
       },
       {
-        id: "d4-mtvernon",
+        id: "d8-mtvernon",
         name: "Mt. Vernon, IL",
         type: "fuel",
         lat: 38.3172,
@@ -383,7 +686,7 @@ export const tripDays: TripDay[] = [
         tips: "Merge onto I-64 West. Last major fuel stop before St. Louis. Fill up here."
       },
       {
-        id: "d4-stl",
+        id: "d8-stl",
         name: "St. Louis, MO (I-64 through)",
         type: "rest",
         lat: 38.6270,
@@ -394,7 +697,7 @@ export const tripDays: TripDay[] = [
         tips: "Friday afternoon traffic may be heavier through STL. Stay patient."
       },
       {
-        id: "d4-home",
+        id: "d8-home",
         name: "Winfield, MO",
         type: "destination",
         lat: 38.9342,
