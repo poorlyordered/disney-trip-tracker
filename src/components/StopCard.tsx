@@ -13,6 +13,7 @@ const typeStyles: Record<Stop["type"], { bg: string; border: string; icon: strin
   park: { bg: "bg-sky-50", border: "border-sky-400", icon: "🎢", label: "Park" },
   dining: { bg: "bg-rose-50", border: "border-rose-400", icon: "🍷", label: "Reservation" },
   attraction: { bg: "bg-indigo-50", border: "border-indigo-400", icon: "✨", label: "Attraction" },
+  event: { bg: "bg-yellow-50", border: "border-yellow-400", icon: "🌟", label: "Event" },
 };
 
 interface StopCardProps {
@@ -24,12 +25,13 @@ interface StopCardProps {
 export default function StopCard({ stop, checked, onToggle }: StopCardProps) {
   const style = typeStyles[stop.type];
   const isDriveStop = stop.mile > 0;
+  const isSuggested = stop.suggested;
 
   return (
     <div
-      className={`border-l-4 ${style.border} ${style.bg} rounded-lg p-3 ${
-        checked ? "opacity-50" : ""
-      } transition-opacity`}
+      className={`border-l-4 ${isSuggested ? "border-dashed border-gray-300" : style.border} ${
+        isSuggested ? "bg-gray-50/50" : style.bg
+      } rounded-lg p-3 ${checked ? "opacity-50" : ""} transition-opacity`}
     >
       <div className="flex items-start gap-2.5">
         <button
@@ -45,12 +47,22 @@ export default function StopCard({ stop, checked, onToggle }: StopCardProps) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 flex-wrap">
             <span className="text-base">{style.icon}</span>
-            <h3 className={`font-semibold text-sm text-gray-900 ${checked ? "line-through" : ""}`}>
+            <h3 className={`font-semibold text-sm ${isSuggested ? "text-gray-500" : "text-gray-900"} ${checked ? "line-through" : ""}`}>
               {stop.name}
             </h3>
             {stop.type === "dining" && (
               <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-rose-100 text-rose-700 font-medium">
                 RESERVED
+              </span>
+            )}
+            {stop.type === "event" && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-yellow-100 text-yellow-800 font-medium">
+                SPECIAL EVENT
+              </span>
+            )}
+            {isSuggested && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500 font-medium italic">
+                suggestion
               </span>
             )}
           </div>
@@ -60,10 +72,16 @@ export default function StopCard({ stop, checked, onToggle }: StopCardProps) {
             <span>{stop.eta}</span>
           </div>
 
-          <p className="mt-1.5 text-xs text-gray-600 leading-relaxed">{stop.description}</p>
+          <p className={`mt-1.5 text-xs leading-relaxed ${isSuggested ? "text-gray-500" : "text-gray-600"}`}>
+            {stop.description}
+          </p>
 
           {stop.tips && (
-            <p className="mt-1.5 text-xs text-amber-700 bg-amber-50/80 rounded px-2 py-1">
+            <p className={`mt-1.5 text-xs rounded px-2 py-1 ${
+              stop.type === "event"
+                ? "text-yellow-800 bg-yellow-50/80"
+                : "text-amber-700 bg-amber-50/80"
+            }`}>
               {stop.tips}
             </p>
           )}

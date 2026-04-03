@@ -171,9 +171,17 @@ export default function Home() {
         </ul>
       </div>
 
+      {/* Legend */}
+      <div className="mt-4 flex flex-wrap gap-2 justify-center text-[10px] text-gray-400">
+        <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-rose-400 inline-block" /> Reserved</span>
+        <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-yellow-400 inline-block" /> Event</span>
+        <span className="flex items-center gap-1"><span className="w-3 h-0.5 border-t border-dashed border-gray-400 inline-block" /> Suggestion</span>
+      </div>
+
       {/* Footer */}
-      <footer className="mt-6 text-center text-[10px] text-gray-300 pb-2">
-        Tap checkboxes as you go
+      <footer className="mt-4 text-center text-[10px] text-gray-300 pb-2">
+        <p>Tap checkboxes as you go</p>
+        <p className="mt-1">Powered by Claude</p>
       </footer>
     </main>
   );

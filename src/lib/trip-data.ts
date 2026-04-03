@@ -1,7 +1,7 @@
 export interface Stop {
   id: string
   name: string
-  type: "start" | "fuel" | "food" | "rest" | "overnight" | "toll-decision" | "destination" | "park" | "dining" | "attraction"
+  type: "start" | "fuel" | "food" | "rest" | "overnight" | "toll-decision" | "destination" | "park" | "dining" | "attraction" | "event"
   lat: number
   lng: number
   mile: number
@@ -10,6 +10,7 @@ export interface Stop {
   address?: string
   tips?: string
   checked?: boolean
+  suggested?: boolean
 }
 
 export interface TripDay {
@@ -241,7 +242,8 @@ export const tripDays: TripDay[] = [
         eta: "8-9 AM",
         description: "Take the boat from Fort Wilderness to Magic Kingdom. Arrive early for rope drop \u2014 shortest lines of the day.",
         address: "Magic Kingdom, Walt Disney World, Orlando, FL",
-        tips: "The Fort Wilderness boat dock is a 5-10 min walk from most campsites. Boat ride is ~10 min. Much better than the bus."
+        tips: "The Fort Wilderness boat dock is a 5-10 min walk from most campsites. Boat ride is ~10 min. Much better than the bus.",
+        suggested: true
       },
       {
         id: "d3-mk-fantasyland",
@@ -252,7 +254,19 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "Morning",
         description: "Hit the big rides while lines are short: Seven Dwarfs Mine Train, Space Mountain, Big Thunder Mountain Railroad, Pirates of the Caribbean.",
-        tips: "Seven Dwarfs Mine Train has the longest wait \u2014 do it first at rope drop or use Lightning Lane."
+        tips: "Seven Dwarfs Mine Train has the longest wait \u2014 do it first at rope drop or use Lightning Lane.",
+        suggested: true
+      },
+      {
+        id: "d3-flower-garden",
+        name: "EPCOT Flower & Garden Festival",
+        type: "event",
+        lat: 28.3747,
+        lng: -81.5494,
+        mile: 0,
+        eta: "All day at EPCOT",
+        description: "The EPCOT International Flower & Garden Festival runs Mar 4 - Jun 1. Over 60 Disney topiaries, 20+ food booths with garden-fresh flavors, and the Garden Rocks Concert Series (free with EPCOT admission). You'll see this when you head to EPCOT for dinner!",
+        tips: "Festival food booths are scattered throughout World Showcase. Try them after your Coral Reef dinner. Concerts at America Gardens Theatre at 5:30, 6:45 & 8 PM."
       },
       {
         id: "d3-mk-lunch",
@@ -263,7 +277,8 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "~12 PM",
         description: "Pecos Bill Tall Tale Inn (Frontierland) or Columbia Harbour House (Liberty Square) are solid quick-service options.",
-        tips: "Or boat back to Fort Wilderness for lunch at Trail's End Restaurant \u2014 buffet, good value, and a break from the crowds."
+        tips: "Or boat back to Fort Wilderness for lunch at Trail's End Restaurant \u2014 buffet, good value, and a break from the crowds.",
+        suggested: true
       },
       {
         id: "d3-mk-afternoon",
@@ -273,12 +288,12 @@ export const tripDays: TripDay[] = [
         lng: -81.5835,
         mile: 0,
         eta: "Afternoon",
-        description: "Jungle Cruise, Haunted Mansion, Buzz Lightyear's Space Ranger Spin. Catch any rides you missed in the morning.",
-        tips: "Lines get longer midday. Consider a break back at camp during the hottest part of the afternoon (2-4 PM) and return for evening."
+        description: "Jungle Cruise, Haunted Mansion. Consider a break back at camp during the hottest part of the afternoon (2-4 PM) and return for evening.",
+        suggested: true
       },
       {
         id: "d3-coral-reef",
-        name: "Coral Reef Restaurant \u2014 RESERVATION",
+        name: "Coral Reef Restaurant",
         type: "dining",
         lat: 28.3747,
         lng: -81.5494,
@@ -286,18 +301,19 @@ export const tripDays: TripDay[] = [
         eta: "4:20 PM",
         description: "Dinner reservation at Coral Reef Restaurant in EPCOT. Seafood dining next to the aquarium in The Seas pavilion.",
         address: "Coral Reef Restaurant, EPCOT, Walt Disney World",
-        tips: "This is in EPCOT, not Magic Kingdom. You'll need to travel from MK to EPCOT \u2014 take the monorail (MK \u2192 TTC \u2192 EPCOT) or bus. Allow 30-45 min travel time. Arrive by 3:30-3:45 PM."
+        tips: "This is in EPCOT, not Magic Kingdom. Take the monorail (MK \u2192 TTC \u2192 EPCOT) or bus. Allow 30-45 min travel time. Arrive by 3:30-3:45 PM."
       },
       {
         id: "d3-epcot-evening",
-        name: "EPCOT World Showcase",
+        name: "EPCOT World Showcase + Festival Booths",
         type: "attraction",
         lat: 28.3689,
         lng: -81.5517,
         mile: 0,
         eta: "Evening",
-        description: "After dinner, explore World Showcase. Walk around the countries, grab drinks and snacks. Don't miss Frozen Ever After (Norway) or Remy's Ratatouille Adventure (France).",
-        tips: "World Showcase is best in the evening \u2014 cooler temps, great atmosphere, and the countries light up beautifully."
+        description: "After dinner, explore World Showcase and hit the Flower & Garden Festival food booths. Don't miss Frozen Ever After (Norway) or Remy's Ratatouille Adventure (France).",
+        tips: "World Showcase is best in the evening. Catch the Garden Rocks concert at 8 PM, then stay for Luminous: The Symphony of Us fireworks at 9:30 PM.",
+        suggested: true
       }
     ]
   },
@@ -320,7 +336,8 @@ export const tripDays: TripDay[] = [
         eta: "8-9 AM",
         description: "Bus from Fort Wilderness to Hollywood Studios. Get there early for the best Star Wars and Toy Story rides.",
         address: "Hollywood Studios, Walt Disney World, Orlando, FL",
-        tips: "This park fills up fast. Rope drop is critical for short waits."
+        tips: "This park fills up fast. Rope drop is critical for short waits.",
+        suggested: true
       },
       {
         id: "d4-hs-starwars",
@@ -331,7 +348,8 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "Morning",
         description: "Rise of the Resistance (must-do, use Lightning Lane if available), Millennium Falcon: Smugglers Run. The whole area is incredibly immersive.",
-        tips: "Rise of the Resistance is the best ride at Disney World. Period. Do this first at rope drop."
+        tips: "Rise of the Resistance is the best ride at Disney World. Period. Do this first at rope drop.",
+        suggested: true
       },
       {
         id: "d4-hs-toystory",
@@ -342,7 +360,8 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "Late Morning",
         description: "Slinky Dog Dash, Toy Story Mania, and Tower of Terror. Rock 'n' Roller Coaster if you like thrill rides.",
-        tips: "Tower of Terror is a classic \u2014 don't skip it."
+        tips: "Tower of Terror is a classic \u2014 don't skip it.",
+        suggested: true
       },
       {
         id: "d4-hs-lunch",
@@ -353,7 +372,8 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "~12 PM",
         description: "Docking Bay 7 in Galaxy's Edge (Star Wars themed, surprisingly good food) or Woody's Lunch Box in Toy Story Land.",
-        tips: "Docking Bay 7 has some of the best quick-service food on Disney property."
+        tips: "Docking Bay 7 has some of the best quick-service food on Disney property.",
+        suggested: true
       },
       {
         id: "d4-pool",
@@ -364,18 +384,32 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "Afternoon",
         description: "Head back to camp for pool time, Tri-Circle-D Ranch (horses), archery, bike rentals, or just relax at the campsite.",
-        tips: "Fort Wilderness has tons of activities \u2014 don't feel like you need to be in a park every minute. The pool is great."
+        tips: "Fort Wilderness has tons of activities \u2014 don't feel like you need to be in a park every minute. The pool is great.",
+        suggested: true
+      },
+      {
+        id: "d4-fantasmic",
+        name: "Fantasmic! at Hollywood Studios",
+        type: "event",
+        lat: 28.3575,
+        lng: -81.5583,
+        mile: 0,
+        eta: "8:30 PM",
+        description: "Nighttime spectacular at Hollywood Studios featuring water, fire, projections, and Disney characters. One of the best shows at Disney World.",
+        address: "Hollywood Studios, Walt Disney World, Orlando, FL",
+        tips: "Show starts at 8:30 PM. Arrive 30-45 min early for good seats. Or grab a dining package for reserved seating."
       },
       {
         id: "d4-campfire",
         name: "Chip 'n' Dale Campfire Singalong",
-        type: "attraction",
+        type: "event",
         lat: 28.4075,
         lng: -81.5635,
         mile: 0,
-        eta: "~8 PM",
+        eta: "~8 PM (if skipping Fantasmic!)",
         description: "Free nightly event at Fort Wilderness. Roast marshmallows, singalong with Chip and Dale, followed by an outdoor Disney movie.",
-        tips: "Bring your own marshmallows or buy the s'mores kit at the trading post. Great for winding down."
+        tips: "Bring your own marshmallows or buy the s'mores kit at the trading post. Great for winding down.",
+        suggested: true
       }
     ]
   },
@@ -398,7 +432,8 @@ export const tripDays: TripDay[] = [
         eta: "8-9 AM",
         description: "Bus from Fort Wilderness to Animal Kingdom. Best experienced early \u2014 animals are most active in the morning.",
         address: "Animal Kingdom, Walt Disney World, Orlando, FL",
-        tips: "This park is doable in half a day. Plan to be out by early afternoon."
+        tips: "This park is doable in half a day. Plan to be out by early afternoon.",
+        suggested: true
       },
       {
         id: "d5-ak-pandora",
@@ -409,7 +444,8 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "Morning",
         description: "Flight of Passage (incredible ride, the best simulator at Disney) and Na'vi River Journey. The whole land is stunning.",
-        tips: "Flight of Passage at rope drop \u2014 wait times hit 2+ hours later in the day."
+        tips: "Flight of Passage at rope drop \u2014 wait times hit 2+ hours later in the day.",
+        suggested: true
       },
       {
         id: "d5-ak-safari",
@@ -420,7 +456,19 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "Late Morning",
         description: "Safari ride through a real savanna with live animals. Expedition Everest is a great roller coaster. Dinosaur ride is fun too.",
-        tips: "Safari is best in the morning when animals are active and it's cooler."
+        tips: "Safari is best in the morning when animals are active and it's cooler.",
+        suggested: true
+      },
+      {
+        id: "d5-buzz-reopen",
+        name: "Buzz Lightyear reopens with new blasters!",
+        type: "event",
+        lat: 28.4177,
+        lng: -81.5812,
+        mile: 0,
+        eta: "Today!",
+        description: "Buzz Lightyear's Space Ranger Spin reopens April 8 with all-new handheld blasters, reactive targets that flash green when hit, and a new practice scene. A recharged experience!",
+        tips: "If you visit Magic Kingdom today or tomorrow, this will be freshly reopened with short initial lines. The new blasters have always-on lasers and come in two colors per vehicle."
       },
       {
         id: "d5-ak-lunch",
@@ -431,7 +479,8 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "~12 PM",
         description: "Best quick-service BBQ on Disney property. Great waterfront seating area.",
-        tips: "The seating area behind the counter is gorgeous and usually less crowded."
+        tips: "The seating area behind the counter is gorgeous and usually less crowded.",
+        suggested: true
       },
       {
         id: "d5-free",
@@ -442,11 +491,12 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "Afternoon",
         description: "Head back to Fort Wilderness. Pool, nap, explore the campground, rent a golf cart, or take the boat to the Magic Kingdom area resorts.",
-        tips: "Rent a golf cart from the Fort Wilderness marina \u2014 it's the best way to explore the campground and a blast to drive around."
+        tips: "Rent a golf cart from the Fort Wilderness marina \u2014 it's the best way to explore the campground and a blast to drive around.",
+        suggested: true
       },
       {
         id: "d5-ogas",
-        name: "Oga's Cantina \u2014 RESERVATION",
+        name: "Oga's Cantina",
         type: "dining",
         lat: 28.3536,
         lng: -81.5607,
@@ -454,7 +504,7 @@ export const tripDays: TripDay[] = [
         eta: "4:45 PM",
         description: "Reservation at Oga's Cantina in Star Wars: Galaxy's Edge at Hollywood Studios. Themed cocktails and atmosphere in a Star Wars bar.",
         address: "Oga's Cantina, Hollywood Studios, Walt Disney World",
-        tips: "This is at Hollywood Studios. Bus from Fort Wilderness takes ~20 min. Arrive by 4:15-4:20. It's a 45-min experience \u2014 drinks and small bites, not a full meal. Try the Fuzzy Tauntaun."
+        tips: "Bus from Fort Wilderness takes ~20 min. Arrive by 4:15-4:20. It's a 45-min experience \u2014 drinks and small bites, not a full meal. Try the Fuzzy Tauntaun."
       },
       {
         id: "d5-hs-evening",
@@ -464,8 +514,9 @@ export const tripDays: TripDay[] = [
         lng: -81.5583,
         mile: 0,
         eta: "Evening",
-        description: "After Oga's, catch any Hollywood Studios rides you missed on Day 2. Galaxy's Edge at night is magical with all the lighting.",
-        tips: "Check the app for Fantasmic! showtimes \u2014 the nighttime spectacular is worth seeing if it's running."
+        description: "After Oga's, catch any Hollywood Studios rides you missed. Galaxy's Edge at night is magical with all the lighting.",
+        tips: "Check the app for Fantasmic! showtimes (8:30 PM). The nighttime spectacular is worth seeing if you missed it Monday.",
+        suggested: true
       }
     ]
   },
@@ -487,7 +538,19 @@ export const tripDays: TripDay[] = [
         mile: 0,
         eta: "Morning",
         description: "Last full park day. Revisit your favorite park or hit anything you missed. EPCOT's World Showcase is great for a relaxed day.",
-        tips: "If you want more rides, go to Magic Kingdom. If you want a chill day with food and drinks, go to EPCOT."
+        tips: "If you want more rides, go to MK (try the new Buzz Lightyear!). If you want a chill day with food and drinks, go to EPCOT for more Flower & Garden Festival.",
+        suggested: true
+      },
+      {
+        id: "d6-after-hours",
+        name: "Disney After Hours (select parks)",
+        type: "event",
+        lat: 28.4177,
+        lng: -81.5812,
+        mile: 0,
+        eta: "Check availability",
+        description: "Disney After Hours events run on select nights at MK ($175-199), Hollywood Studios ($155-189), and EPCOT. Limited crowds, short lines, free snacks. Check disneyworld.com for April 9 availability.",
+        tips: "Tickets are limited and sell out. If available for tonight, it's an incredible way to end the trip \u2014 nearly empty parks from 10 PM to 1 AM."
       },
       {
         id: "d6-epcot-food",
@@ -497,8 +560,9 @@ export const tripDays: TripDay[] = [
         lng: -81.5517,
         mile: 0,
         eta: "Lunch",
-        description: "Eat your way around the world. Highlights: fish & chips (UK), school bread (Norway), tacos (Mexico), pastries (France), bratwurst (Germany).",
-        tips: "Share plates and try lots of things rather than one big meal. The bakery in France (Les Halles Boulangerie-Patisserie) is excellent."
+        description: "Eat your way around the world. Highlights: fish & chips (UK), school bread (Norway), tacos (Mexico), pastries (France), bratwurst (Germany). Plus the Flower & Garden Festival booths!",
+        tips: "Share plates and try lots of things rather than one big meal. The bakery in France (Les Halles Boulangerie-Patisserie) is excellent.",
+        suggested: true
       },
       {
         id: "d6-disney-springs",
@@ -510,7 +574,19 @@ export const tripDays: TripDay[] = [
         eta: "Afternoon",
         description: "Shopping and dining district. No park ticket needed. Great for souvenirs, unique shops, and restaurants.",
         address: "Disney Springs, Walt Disney World, Orlando, FL",
-        tips: "World of Disney store for souvenirs. Gideon's Bakehouse for cookies (expect a line). The LEGO store is fun for kids."
+        tips: "World of Disney store for souvenirs. Gideon's Bakehouse for cookies (expect a line). The LEGO store is fun for kids.",
+        suggested: true
+      },
+      {
+        id: "d6-happily",
+        name: "Happily Ever After fireworks (MK)",
+        type: "event",
+        lat: 28.4177,
+        lng: -81.5812,
+        mile: 0,
+        eta: "9:30 PM",
+        description: "Magic Kingdom's fireworks spectacular. Projections on Cinderella Castle with a stunning fireworks show. Best viewed from Main Street or the Fort Wilderness beach!",
+        tips: "You can see the fireworks from the Fort Wilderness beach without a park ticket! Bring chairs and enjoy. Or watch from inside MK on Main Street for the full projection experience."
       },
       {
         id: "d6-packup",
@@ -519,7 +595,7 @@ export const tripDays: TripDay[] = [
         lat: 28.4089,
         lng: -81.5639,
         mile: 0,
-        eta: "Evening",
+        eta: "After fireworks",
         description: "Head back to Fort Wilderness. Start packing up the RV, dump tanks, organize for tomorrow's early departure.",
         tips: "Dump station at Fort Wilderness before you leave. Fuel up at the gas station near Disney Springs or on your way to the Turnpike."
       }
