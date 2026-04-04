@@ -225,7 +225,7 @@ export const tripDays: TripDay[] = [
   },
   {
     day: 3,
-    date: "Sunday, April 6",
+    date: "Monday, April 6",
     label: "Disney Day 1",
     from: "Fort Wilderness",
     to: "Fort Wilderness",
@@ -319,7 +319,7 @@ export const tripDays: TripDay[] = [
   },
   {
     day: 4,
-    date: "Monday, April 7",
+    date: "Tuesday, April 7",
     label: "Disney Day 2",
     from: "Fort Wilderness",
     to: "Fort Wilderness",
@@ -415,7 +415,7 @@ export const tripDays: TripDay[] = [
   },
   {
     day: 5,
-    date: "Tuesday, April 8",
+    date: "Wednesday, April 8",
     label: "Disney Day 3",
     from: "Fort Wilderness",
     to: "Fort Wilderness",
@@ -522,7 +522,7 @@ export const tripDays: TripDay[] = [
   },
   {
     day: 6,
-    date: "Wednesday, April 9",
+    date: "Thursday, April 9",
     label: "Disney Day 4",
     from: "Fort Wilderness",
     to: "Fort Wilderness",
@@ -603,7 +603,7 @@ export const tripDays: TripDay[] = [
   },
   {
     day: 7,
-    date: "Thursday, April 10",
+    date: "Friday, April 10",
     label: "Return Day 1",
     from: "Fort Wilderness, Disney World",
     to: "Murfreesboro, TN",
@@ -707,7 +707,7 @@ export const tripDays: TripDay[] = [
   },
   {
     day: 8,
-    date: "Friday, April 11",
+    date: "Saturday, April 11",
     label: "Return Day 2",
     from: "Murfreesboro, TN",
     to: "Winfield, MO",

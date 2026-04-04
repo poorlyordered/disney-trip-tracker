@@ -154,8 +154,8 @@ export default function Home() {
       <div className="mt-3 bg-rose-50 rounded-lg p-3 shadow-sm border border-rose-200">
         <h3 className="font-semibold text-rose-900 text-sm mb-2">Dining Reservations</h3>
         <div className="space-y-1.5 text-xs text-rose-800">
-          <div><span className="font-medium">Sun 4/6, 4:20 PM:</span> Coral Reef Restaurant (EPCOT)</div>
-          <div><span className="font-medium">Tue 4/8, 4:45 PM:</span> Oga&apos;s Cantina (Hollywood Studios)</div>
+          <div><span className="font-medium">Mon 4/6, 4:20 PM:</span> Coral Reef Restaurant (EPCOT)</div>
+          <div><span className="font-medium">Wed 4/8, 4:45 PM:</span> Oga&apos;s Cantina (Hollywood Studios)</div>
         </div>
       </div>
 
