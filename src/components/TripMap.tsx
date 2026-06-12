@@ -5,6 +5,11 @@ import { tripDays, type Stop } from "@/lib/trip-data";
 
 const driveTypes = new Set(["start", "fuel", "food", "rest", "overnight", "destination", "hotel", "pet"]);
 
+const routeGroups = [
+  { label: "Outbound", days: new Set([1, 2]), color: "#2563eb" },
+  { label: "Return", days: new Set([8, 9]), color: "#16a34a" },
+];
+
 const stopColors: Record<string, string> = {
   start: "#22c55e",
   fuel: "#f59e0b",
@@ -35,12 +40,11 @@ export default function TripMap() {
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
-    const driveDays = tripDays.filter((d) => d.totalMiles > 0);
-    const driveStops = driveDays.flatMap((day) =>
-      day.stops.filter((s) => driveTypes.has(s.type))
-    );
-
     const seen = new Set<string>();
+    const driveStops = tripDays
+      .filter((day) => day.totalMiles > 0)
+      .flatMap((day) => day.stops.filter((stop) => driveTypes.has(stop.type)));
+
     const uniqueStops = driveStops.filter((s) => {
       const key = `${s.lat.toFixed(2)},${s.lng.toFixed(2)}`;
       if (seen.has(key)) return false;
@@ -48,14 +52,23 @@ export default function TripMap() {
       return true;
     });
 
-    const routeCoords = uniqueStops.map((s) => [s.lat, s.lng] as [number, number]);
+    const allRouteCoords = uniqueStops.map((s) => [s.lat, s.lng] as [number, number]);
 
-    L.polyline(routeCoords, {
-      color: "#3b82f6",
-      weight: 2.5,
-      opacity: 0.6,
-      dashArray: "6, 6",
-    }).addTo(map);
+    routeGroups.forEach((group) => {
+      const groupStops = tripDays
+        .filter((day) => group.days.has(day.day))
+        .flatMap((day) => day.stops.filter((stop) => driveTypes.has(stop.type)));
+      const routeCoords = groupStops.map((s) => [s.lat, s.lng] as [number, number]);
+
+      if (routeCoords.length < 2) return;
+
+      L.polyline(routeCoords, {
+        color: group.color,
+        weight: 3,
+        opacity: 0.72,
+        dashArray: group.label === "Return" ? "8, 8" : undefined,
+      }).addTo(map);
+    });
 
     uniqueStops.forEach((stop) => {
       const color = stopColors[stop.type] ?? "#6b7280";
@@ -84,7 +97,7 @@ export default function TripMap() {
         );
     });
 
-    const bounds = L.latLngBounds(routeCoords);
+    const bounds = L.latLngBounds(allRouteCoords);
     map.fitBounds(bounds, { padding: [20, 20] });
 
     return () => {
@@ -97,8 +110,18 @@ export default function TripMap() {
   }
 
   return (
-    <div className="w-full h-48 md:h-64 rounded-lg overflow-hidden shadow-sm border border-gray-200">
+    <div className="relative w-full h-48 md:h-64 rounded-lg overflow-hidden shadow-sm border border-gray-200">
       <div id="trip-map" className="h-full w-full" />
+      <div className="pointer-events-none absolute left-2 top-2 flex gap-2 rounded bg-white/90 px-2 py-1 text-[10px] font-semibold text-gray-700 shadow-sm">
+        <span className="flex items-center gap-1">
+          <span className="h-0.5 w-4 rounded bg-blue-600" />
+          Outbound
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="h-0.5 w-4 rounded border-t-2 border-dashed border-green-600" />
+          Return
+        </span>
+      </div>
     </div>
   );
 }
