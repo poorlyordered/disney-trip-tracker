@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { tripDays, type Stop } from "@/lib/trip-data";
 
-const driveTypes = new Set(["start", "fuel", "food", "rest", "overnight", "toll-decision", "destination"]);
+const driveTypes = new Set(["start", "fuel", "food", "rest", "overnight", "destination", "hotel", "pet"]);
 
 const stopColors: Record<string, string> = {
   start: "#22c55e",
@@ -11,8 +11,9 @@ const stopColors: Record<string, string> = {
   food: "#f97316",
   rest: "#3b82f6",
   overnight: "#8b5cf6",
-  "toll-decision": "#ef4444",
   destination: "#ec4899",
+  hotel: "#8b5cf6",
+  pet: "#65a30d",
 };
 
 export default function TripMap() {

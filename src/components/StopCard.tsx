@@ -8,12 +8,12 @@ const typeStyles: Record<Stop["type"], { bg: string; border: string; icon: strin
   food: { bg: "bg-orange-50", border: "border-orange-400", icon: "🍽", label: "Food" },
   rest: { bg: "bg-blue-50", border: "border-blue-400", icon: "☕", label: "Rest" },
   overnight: { bg: "bg-purple-50", border: "border-purple-400", icon: "🏨", label: "Overnight" },
-  "toll-decision": { bg: "bg-red-50", border: "border-red-400", icon: "🛣", label: "Toll" },
-  destination: { bg: "bg-pink-50", border: "border-pink-400", icon: "🏰", label: "Destination" },
-  park: { bg: "bg-sky-50", border: "border-sky-400", icon: "🎢", label: "Park" },
-  dining: { bg: "bg-rose-50", border: "border-rose-400", icon: "🍷", label: "Reservation" },
-  attraction: { bg: "bg-indigo-50", border: "border-indigo-400", icon: "✨", label: "Attraction" },
-  event: { bg: "bg-yellow-50", border: "border-yellow-400", icon: "🌟", label: "Event" },
+  destination: { bg: "bg-emerald-50", border: "border-emerald-400", icon: "🏁", label: "Destination" },
+  hotel: { bg: "bg-violet-50", border: "border-violet-400", icon: "🏨", label: "Hotel" },
+  activity: { bg: "bg-sky-50", border: "border-sky-400", icon: "★", label: "Activity" },
+  radio: { bg: "bg-cyan-50", border: "border-cyan-400", icon: "♪", label: "Radio" },
+  pet: { bg: "bg-lime-50", border: "border-lime-400", icon: "🐾", label: "Dog Break" },
+  errand: { bg: "bg-slate-50", border: "border-slate-400", icon: "✓", label: "Task" },
 };
 
 interface StopCardProps {
@@ -50,14 +50,9 @@ export default function StopCard({ stop, checked, onToggle }: StopCardProps) {
             <h3 className={`font-semibold text-sm ${isSuggested ? "text-gray-500" : "text-gray-900"} ${checked ? "line-through" : ""}`}>
               {stop.name}
             </h3>
-            {stop.type === "dining" && (
+            {(stop.type === "hotel" || stop.type === "overnight") && (
               <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-rose-100 text-rose-700 font-medium">
-                RESERVED
-              </span>
-            )}
-            {stop.type === "event" && (
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-yellow-100 text-yellow-800 font-medium">
-                SPECIAL EVENT
+                RESERVED HOTEL
               </span>
             )}
             {isSuggested && (
@@ -78,8 +73,8 @@ export default function StopCard({ stop, checked, onToggle }: StopCardProps) {
 
           {stop.tips && (
             <p className={`mt-1.5 text-xs rounded px-2 py-1 ${
-              stop.type === "event"
-                ? "text-yellow-800 bg-yellow-50/80"
+              stop.type === "pet"
+                ? "text-lime-800 bg-lime-50/80"
                 : "text-amber-700 bg-amber-50/80"
             }`}>
               {stop.tips}

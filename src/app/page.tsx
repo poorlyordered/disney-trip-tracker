@@ -1,17 +1,33 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
-import { tripDays } from "@/lib/trip-data";
 import DaySection from "@/components/DaySection";
 import TollInfo from "@/components/TollInfo";
+import {
+  checklistGroups,
+  radioRegions,
+  reservations,
+  routeNotes,
+  tripDays,
+  tripSummary,
+  type ChecklistItem,
+} from "@/lib/trip-data";
 
 const TripMap = dynamic(() => import("@/components/TripMap"), { ssr: false });
 
-const STORAGE_KEY = "disney-trip-checked";
+const STORAGE_KEY = "vacation-planner-checked";
+const dayGroups = [
+  { label: "Outbound", days: [1, 2] },
+  { label: "Springfield", days: [3, 4, 5, 6, 7] },
+  { label: "Return", days: [8, 9] },
+];
+
+type PlannerTab = "today" | "itinerary" | "prep" | "info";
 
 function loadChecked(): Record<string, boolean> {
   if (typeof window === "undefined") return {};
+
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : {};
@@ -20,169 +36,298 @@ function loadChecked(): Record<string, boolean> {
   }
 }
 
-const dayGroups = [
-  { label: "Drive Down", days: [1, 2] },
-  { label: "Disney", days: [3, 4, 5, 6] },
-  { label: "Drive Home", days: [7, 8] },
-];
+function getSuggestedDay() {
+  const today = new Date();
+  const month = today.getMonth();
+  const date = today.getDate();
+
+  if (today.getFullYear() === 2026 && month === 5 && date >= 13 && date <= 21) {
+    return date - 12;
+  }
+
+  return 1;
+}
+
+function ItemCheckbox({
+  item,
+  checked,
+  onToggle,
+}: {
+  item: ChecklistItem;
+  checked: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className={`flex w-full items-start gap-3 rounded-md border px-3 py-2 text-left transition ${
+        checked
+          ? "border-emerald-200 bg-emerald-50 text-emerald-950"
+          : "border-gray-200 bg-white text-gray-800"
+      }`}
+    >
+      <span
+        className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border text-xs font-bold ${
+          checked ? "border-emerald-500 bg-emerald-500 text-white" : "border-gray-300 bg-white"
+        }`}
+      >
+        {checked ? "✓" : ""}
+      </span>
+      <span className="min-w-0">
+        <span className={`block text-sm font-medium ${checked ? "line-through" : ""}`}>
+          {item.label}
+        </span>
+        {item.detail && <span className="mt-0.5 block text-xs text-gray-500">{item.detail}</span>}
+      </span>
+    </button>
+  );
+}
 
 export default function Home() {
-  const [checkedStops, setCheckedStops] = useState<Record<string, boolean>>({});
-  const [activeDay, setActiveDay] = useState(1);
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const [activeDay, setActiveDay] = useState(getSuggestedDay);
+  const [tab, setTab] = useState<PlannerTab>("today");
 
   useEffect(() => {
-    setCheckedStops(loadChecked());
+    setCheckedItems(loadChecked());
   }, []);
 
-  function toggleStop(id: string) {
-    setCheckedStops((prev) => {
+  function toggleItem(id: string) {
+    setCheckedItems((prev) => {
       const next = { ...prev, [id]: !prev[id] };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       return next;
     });
   }
 
-  const totalStops = tripDays.reduce((sum, d) => sum + d.stops.length, 0);
-  const checkedCount = Object.values(checkedStops).filter(Boolean).length;
-  const activeGroup = dayGroups.find((g) => g.days.includes(activeDay));
+  const activeGroup = dayGroups.find((group) => group.days.includes(activeDay)) ?? dayGroups[0];
+  const activeTripDay = tripDays.find((day) => day.day === activeDay) ?? tripDays[0];
+  const allChecklistItems = checklistGroups.flatMap((group) => group.items);
+  const totalItems = tripDays.reduce((sum, day) => sum + day.stops.length, 0) + allChecklistItems.length;
+  const completedItems = useMemo(
+    () => Object.entries(checkedItems).filter(([, checked]) => checked).length,
+    [checkedItems],
+  );
+  const completion = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
 
   return (
-    <main className="max-w-lg mx-auto px-4 py-5 pb-20">
-      {/* Header */}
-      <header className="text-center mb-5">
-        <h1 className="text-xl font-bold text-gray-900">Disney Trip Tracker</h1>
-        <p className="text-xs text-gray-400 mt-0.5">
-          Winfield, MO → Fort Wilderness → Home &middot; Apr 4-11
-        </p>
+    <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-4 py-4 pb-10">
+      <header className="mb-4 border-b border-gray-200 pb-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-sky-700">
+              {tripSummary.dates}
+            </p>
+            <h1 className="mt-1 text-3xl font-bold text-gray-950">{tripSummary.title}</h1>
+            <p className="mt-1 text-sm text-gray-600">
+              {tripSummary.subtitle} · {tripSummary.party}
+            </p>
+          </div>
+          <div className="rounded-md border border-gray-200 bg-white px-3 py-2 shadow-sm">
+            <div className="flex items-center justify-between gap-8 text-xs text-gray-500">
+              <span>Progress</span>
+              <span className="font-semibold text-gray-900">
+                {completedItems}/{totalItems}
+              </span>
+            </div>
+            <div className="mt-2 h-2 w-44 rounded-full bg-gray-100">
+              <div
+                className="h-2 rounded-full bg-emerald-500 transition-all duration-500"
+                style={{ width: `${completion}%` }}
+              />
+            </div>
+          </div>
+        </div>
       </header>
 
-      {/* Progress */}
-      <div className="bg-white rounded-lg p-3 shadow-sm border border-gray-200 mb-3">
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-xs font-medium text-gray-600">Trip Progress</span>
-          <span className="text-xs text-gray-400">{checkedCount}/{totalStops}</span>
-        </div>
-        <div className="w-full bg-gray-100 rounded-full h-2">
-          <div
-            className="bg-green-500 h-2 rounded-full transition-all duration-500"
-            style={{ width: `${totalStops > 0 ? Math.round((checkedCount / totalStops) * 100) : 0}%` }}
-          />
-        </div>
-        {checkedCount === totalStops && totalStops > 0 && (
-          <p className="mt-1.5 text-center text-green-600 font-medium text-xs">
-            Trip complete! Welcome home!
-          </p>
-        )}
-      </div>
-
-      {/* Map */}
-      <div className="mb-3">
+      <section className="mb-4 grid gap-3 lg:grid-cols-[1.35fr_0.9fr]">
         <TripMap />
-      </div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-gray-950">Today</h2>
+            <p className="mt-1 text-lg font-bold text-gray-900">{activeTripDay.date}</p>
+            <p className="mt-1 text-sm text-gray-600">{activeTripDay.focus}</p>
+            <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+              <div className="rounded-md bg-gray-50 p-2">
+                <span className="block text-gray-500">Route</span>
+                <span className="font-semibold text-gray-900">
+                  {activeTripDay.from} to {activeTripDay.to}
+                </span>
+              </div>
+              <div className="rounded-md bg-gray-50 p-2">
+                <span className="block text-gray-500">Drive</span>
+                <span className="font-semibold text-gray-900">{activeTripDay.driveTime}</span>
+              </div>
+            </div>
+          </div>
 
-      {/* Toll Info */}
-      <div className="mb-3">
-        <TollInfo />
-      </div>
+          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-gray-950">Hotel Reservations</h2>
+            <div className="mt-3 space-y-2">
+              {reservations.map((reservation) => (
+                <div key={reservation.id} className="border-l-2 border-rose-300 pl-3">
+                  <p className="text-xs font-semibold text-rose-700">{reservation.when}</p>
+                  <p className="text-sm font-semibold text-gray-950">{reservation.title}</p>
+                  <p className="text-xs text-gray-500">
+                    {reservation.location}
+                    {reservation.note ? ` · ${reservation.note}` : ""}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* Phase Tabs */}
-      <div className="flex gap-1.5 mb-2">
-        {dayGroups.map((group) => (
+      <nav className="sticky top-0 z-20 mb-4 grid grid-cols-4 gap-1 rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
+        {[
+          ["today", "Today"],
+          ["itinerary", "Itinerary"],
+          ["prep", "Prep"],
+          ["info", "Info"],
+        ].map(([id, label]) => (
           <button
-            key={group.label}
-            onClick={() => setActiveDay(group.days[0])}
-            className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              activeGroup?.label === group.label
-                ? "bg-blue-600 text-white"
-                : "bg-white text-gray-500 border border-gray-200"
+            key={id}
+            type="button"
+            onClick={() => setTab(id as PlannerTab)}
+            className={`rounded-md px-2 py-2 text-xs font-semibold transition ${
+              tab === id ? "bg-gray-950 text-white" : "text-gray-600 hover:bg-gray-50"
             }`}
           >
-            {group.label}
+            {label}
           </button>
         ))}
-      </div>
+      </nav>
 
-      {/* Day Tabs within group */}
-      {activeGroup && (
-        <div className="flex gap-1 mb-3">
-          {activeGroup.days.map((dayNum) => {
-            const day = tripDays.find((d) => d.day === dayNum);
-            if (!day) return null;
-            const shortDate = day.date.split(", ")[1]?.replace("April ", "4/") ?? "";
-            return (
-              <button
-                key={dayNum}
-                onClick={() => setActiveDay(dayNum)}
-                className={`flex-1 py-1.5 px-1 rounded text-[11px] font-medium transition-colors ${
-                  activeDay === dayNum
-                    ? "bg-gray-800 text-white"
-                    : "bg-gray-100 text-gray-500"
-                }`}
-              >
-                {shortDate}
-              </button>
-            );
-          })}
-        </div>
+      {tab === "today" && (
+        <section>
+          <DaySection day={activeTripDay} checkedStops={checkedItems} onToggleStop={toggleItem} />
+        </section>
       )}
 
-      {/* Day Itinerary */}
-      {tripDays
-        .filter((d) => d.day === activeDay)
-        .map((day) => (
-          <DaySection
-            key={day.day}
-            day={day}
-            checkedStops={checkedStops}
-            onToggleStop={toggleStop}
-          />
-        ))}
+      {tab === "itinerary" && (
+        <section>
+          <div className="mb-3 flex gap-1.5">
+            {dayGroups.map((group) => (
+              <button
+                key={group.label}
+                type="button"
+                onClick={() => setActiveDay(group.days[0])}
+                className={`flex-1 rounded-lg py-2 text-xs font-semibold transition ${
+                  activeGroup.label === group.label
+                    ? "bg-sky-700 text-white"
+                    : "border border-gray-200 bg-white text-gray-600"
+                }`}
+              >
+                {group.label}
+              </button>
+            ))}
+          </div>
+          <div className="mb-4 grid grid-cols-2 gap-1 sm:grid-cols-5">
+            {activeGroup.days.map((dayNum) => {
+              const day = tripDays.find((candidate) => candidate.day === dayNum);
+              if (!day) return null;
 
-      {/* Quick Reference */}
-      <div className="mt-6 bg-white rounded-lg p-3 shadow-sm border border-gray-200">
-        <h3 className="font-semibold text-gray-900 text-sm mb-2">Quick Reference</h3>
-        <div className="space-y-1.5 text-xs text-gray-600">
-          <div><span className="font-medium text-gray-800">Route:</span> I-64 → I-57 → I-24 → I-75 → FL Turnpike</div>
-          <div><span className="font-medium text-gray-800">Night 1:</span> Best Western, McDonough, GA</div>
-          <div><span className="font-medium text-gray-800">Camp:</span> Fort Wilderness, 4510 Fort Wilderness Trail, Orlando, FL</div>
-          <div><span className="font-medium text-gray-800">Night 7:</span> Best Western, Murfreesboro, TN</div>
-          <div><span className="font-medium text-gray-800">Vehicles:</span> RV + 1 Car</div>
-        </div>
-      </div>
+              return (
+                <button
+                  key={day.day}
+                  type="button"
+                  onClick={() => setActiveDay(day.day)}
+                  className={`rounded-md px-2 py-2 text-left text-xs transition ${
+                    activeDay === day.day
+                      ? "bg-gray-950 text-white"
+                      : "border border-gray-200 bg-white text-gray-600"
+                  }`}
+                >
+                  <span className="block font-semibold">{day.date.replace(", June", " Jun")}</span>
+                  <span className="block opacity-80">{day.label}</span>
+                </button>
+              );
+            })}
+          </div>
+          <DaySection day={activeTripDay} checkedStops={checkedItems} onToggleStop={toggleItem} />
+        </section>
+      )}
 
-      {/* Reservations */}
-      <div className="mt-3 bg-rose-50 rounded-lg p-3 shadow-sm border border-rose-200">
-        <h3 className="font-semibold text-rose-900 text-sm mb-2">Dining Reservations</h3>
-        <div className="space-y-1.5 text-xs text-rose-800">
-          <div><span className="font-medium">Mon 4/6, 4:20 PM:</span> Coral Reef Restaurant (EPCOT)</div>
-          <div><span className="font-medium">Wed 4/8, 4:45 PM:</span> Oga&apos;s Cantina (Hollywood Studios)</div>
-        </div>
-      </div>
+      {tab === "prep" && (
+        <section className="grid gap-3 md:grid-cols-2">
+          {checklistGroups.map((group) => (
+            <div key={group.id} className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+              <h2 className="text-sm font-semibold text-gray-950">{group.title}</h2>
+              <div className="mt-3 space-y-2">
+                {group.items.map((item) => (
+                  <ItemCheckbox
+                    key={item.id}
+                    item={item}
+                    checked={!!checkedItems[item.id]}
+                    onToggle={() => toggleItem(item.id)}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      )}
 
-      {/* RV Warnings */}
-      <div className="mt-3 bg-amber-50 rounded-lg p-3 shadow-sm border border-amber-200">
-        <h3 className="font-semibold text-amber-900 text-sm mb-2">RV Alerts</h3>
-        <ul className="space-y-1.5 text-xs text-amber-800">
-          <li><strong>Monteagle (I-24):</strong> 6% grade descent. GEAR DOWN.</li>
-          <li><strong>Atlanta (return):</strong> Unavoidable. Aim 10 AM-2 PM or after 7 PM.</li>
-          <li><strong>South GA:</strong> Long gaps between exits. Keep fuel up.</li>
-          <li><strong>Orlando:</strong> Take the Turnpike, skip I-4.</li>
-          <li><strong>Hotels:</strong> Call both Best Westerns about RV parking.</li>
-        </ul>
-      </div>
-
-      {/* Legend */}
-      <div className="mt-4 flex flex-wrap gap-2 justify-center text-[10px] text-gray-400">
-        <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-rose-400 inline-block" /> Reserved</span>
-        <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-yellow-400 inline-block" /> Event</span>
-        <span className="flex items-center gap-1"><span className="w-3 h-0.5 border-t border-dashed border-gray-400 inline-block" /> Suggestion</span>
-      </div>
-
-      {/* Footer */}
-      <footer className="mt-4 text-center text-[10px] text-gray-300 pb-2">
-        <p>Tap checkboxes as you go</p>
-        <p className="mt-1">Powered by Claude</p>
-      </footer>
+      {tab === "info" && (
+        <section className="grid gap-3 lg:grid-cols-2">
+          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-gray-950">Route Notes</h2>
+            <dl className="mt-3 space-y-2 text-sm">
+              <div>
+                <dt className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                  Home base
+                </dt>
+                <dd className="text-gray-900">{tripSummary.homeBase}</dd>
+              </div>
+              <div>
+                <dt className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                  Main route
+                </dt>
+                <dd className="text-gray-900">{tripSummary.route}</dd>
+              </div>
+            </dl>
+            <ul className="mt-4 space-y-2 text-sm text-gray-700">
+              {routeNotes.map((note) => (
+                <li key={note} className="rounded-md bg-gray-50 px-3 py-2">
+                  {note}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <TollInfo />
+          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm lg:col-span-2">
+            <h2 className="text-sm font-semibold text-gray-950">K-LOVE / Air1 Radio</h2>
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
+              {radioRegions.map((region) => (
+                <div key={region.id} className="rounded-md border border-gray-200 bg-gray-50 p-3">
+                  <h3 className="text-sm font-semibold text-gray-900">{region.area}</h3>
+                  <div className="mt-2 grid gap-2 text-xs text-gray-700 sm:grid-cols-2">
+                    <div>
+                      <p className="font-semibold text-gray-950">K-LOVE</p>
+                      <ul className="mt-1 space-y-1">
+                        {region.klove.map((station) => (
+                          <li key={station}>{station}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-950">Air1</p>
+                      <ul className="mt-1 space-y-1">
+                        {region.air1.map((station) => (
+                          <li key={station}>{station}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  {region.note && <p className="mt-2 text-xs text-gray-500">{region.note}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

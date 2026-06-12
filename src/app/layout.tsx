@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Disney Trip Tracker",
-  description: "Winfield, MO to Fort Wilderness - April 2026",
+  title: "Vacation Planner",
+  description: "Winfield, MO to Springfield, VA - June 2026",
 };
 
 export default function RootLayout({
